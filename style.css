@@ -1,0 +1,170 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+}
+
+nav {
+  background-color: black;
+  color: white;
+  box-shadow: 2px 4px 10px rgb(86, 85, 85);
+  border-radius: 50px;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+h2 {
+  font-size: 35px;
+  margin-left: 70px;
+}
+
+.btn1 {
+  padding: 10px 15px;
+  margin-right: 70px;
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+}
+
+.container {
+  background-color: rgba(0,0,0,0.6);
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.context_form {
+  background-color: white;
+  width: 320px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.text {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.text h2 {
+  color: black;
+  font-size: 20px;
+  margin: 0;
+}
+
+.text button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.input_container input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.input_container button {
+  width: 100%;
+  padding: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.hide {
+  display: none;
+}
+
+.message {
+  text-align: center;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 12px;
+}
+
+
+header{
+  width: 100%;
+  height: 530px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 230px 0px 0px 0px;
+  background-image: url(tjrso8tbi_zlYWvhg56xpDwK6RcOMafI.jpg);
+}
+.header_about h1{
+  font-size: 84px;
+  font-family: 'Times New Roman', Times, serif;
+}
+.header_about p{
+  margin: 15px 0px 25px 0px;
+  font-size: 20px;
+}
+.header_about .button1{
+  padding: 10px 15px;
+  border-radius: 7px;
+  border: 1px solid black;
+  color: black;
+}
+.header_about .button2{
+  margin-left: 40px;
+  padding: 10px 15px;
+  border-radius: 7px;
+  border: 1px solid black;
+  color: black;
+
+}
+
+.about-section{
+  width: 100%;
+  height: 230px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 600px;
+}
+.about-section .about-text{
+  border: 1px solid black;
+  padding: 25px;
+}
+.about-img img{
+  width: 400px;
+  height: 300px;
+  margin-left: 120px;
+}
+.about-container{
+  display: flex;
+  justify-content: space-around;
+  padding: 55px;
+  margin-top: 150px;
+}
+.about-lorem{
+  width: 500px;
+  margin-right: 100px;
+  text-align: justify;
+}
+.about-lorem h2{
+  font-size: 50px;
+  font-family: serif;
+  position: relative;
+  right: 75px;
+}
+.about-lorem p{
+  font-size: 18px;
+}
+
