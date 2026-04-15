@@ -1,1218 +1,1967 @@
 <!DOCTYPE html>
 <html lang="uz" data-theme="dark">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IT-Park</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== VARIABLES ===== */
-    [data-theme="dark"] {
-      --bg: #080810;
-      --bg2: #0f0f1a;
-      --bg3: #16162a;
-      --card: #1c1c30;
-      --border: rgba(255,255,255,0.07);
-      --text: #f0f0ff;
-      --text2: #9090b8;
-      --text3: #5a5a80;
-      --accent: #6c63ff;
-      --accent2: #00d4ff;
-      --nav-bg: rgba(8,8,16,0.85);
-      --shadow: 0 8px 40px rgba(0,0,0,0.5);
-      --hero-overlay: rgba(8,8,16,0.65);
-    }
-    [data-theme="light"] {
-      --bg: #f5f5ff;
-      --bg2: #ebebff;
-      --bg3: #e0e0f8;
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.08);
-      --text: #0d0d2b;
-      --text2: #44446a;
-      --text3: #8888aa;
-      --accent: #5a50f0;
-      --accent2: #0099cc;
-      --nav-bg: rgba(245,245,255,0.88);
-      --shadow: 0 8px 40px rgba(90,80,240,0.1);
-      --hero-overlay: rgba(245,245,255,0.55);
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IT-Park</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ===== VARIABLES ===== */
+        [data-theme="dark"] {
+            --bg: #080810;
+            --bg2: #0f0f1a;
+            --bg3: #16162a;
+            --card: #1c1c30;
+            --border: rgba(255, 255, 255, 0.07);
+            --text: #f0f0ff;
+            --text2: #9090b8;
+            --text3: #5a5a80;
+            --accent: #6c63ff;
+            --accent2: #00d4ff;
+            --nav-bg: rgba(8, 8, 16, 0.85);
+            --shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            --hero-overlay: rgba(8, 8, 16, 0.65);
+        }
 
-    /* ===== RESET ===== */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.4s, color 0.4s;
-      overflow-x: hidden;
-    }
-    a { text-decoration: none; color: inherit; }
-    img { display: block; max-width: 100%; }
-    button { cursor: pointer; font-family: inherit; }
+        [data-theme="light"] {
+            --bg: #f5f5ff;
+            --bg2: #ebebff;
+            --bg3: #e0e0f8;
+            --card: #ffffff;
+            --border: rgba(0, 0, 0, 0.08);
+            --text: #0d0d2b;
+            --text2: #44446a;
+            --text3: #8888aa;
+            --accent: #5a50f0;
+            --accent2: #0099cc;
+            --nav-bg: rgba(245, 245, 255, 0.88);
+            --shadow: 0 8px 40px rgba(90, 80, 240, 0.1);
+            --hero-overlay: rgba(245, 245, 255, 0.55);
+        }
 
-    /* ===== SCROLLBAR ===== */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+        /* ===== RESET ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* ===== NOISE OVERLAY ===== */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none; opacity: 0.4;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* ===== NAVBAR ===== */
-    .navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-      height: 70px;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: background 0.4s;
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.5rem; font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.5px;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 8px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.9rem; font-weight: 500;
-      color: var(--text2);
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: color 0.2s, background 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); background: var(--bg3); }
-    .nav-right { display: flex; align-items: center; gap: 12px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.4s, color 0.4s;
+            overflow-x: hidden;
+        }
 
-    /* Theme toggle */
-    .theme-toggle {
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
-    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-    /* Add user button */
-    .btn-add-user {
-      padding: 10px 20px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.88rem; font-weight: 600;
-      letter-spacing: 0.3px;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .btn-add-user:hover { opacity: 0.88; transform: translateY(-1px); }
+        img {
+            display: block;
+            max-width: 100%;
+        }
 
-    /* Mobile menu */
-    .hamburger {
-      display: none;
-      width: 44px; height: 44px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      font-size: 1.3rem;
-      align-items: center; justify-content: center;
-    }
-    .mobile-menu {
-      display: none;
-      position: fixed; top: 70px; left: 0; right: 0;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      padding: 20px;
-      z-index: 999;
-      flex-direction: column; gap: 8px;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      padding: 12px 16px;
-      border-radius: 10px;
-      color: var(--text2);
-      font-weight: 500;
-      transition: background 0.2s, color 0.2s;
-    }
-    .mobile-menu a:hover { background: var(--bg3); color: var(--text); }
+        button {
+            cursor: pointer;
+            font-family: 'Times New Roman', Times, serif;
+        }
 
-    /* ===== HERO ===== */
-    .hero {
-      min-height: 100vh;
-      display: flex; align-items: center; justify-content: center;
-      text-align: center;
-      position: relative; overflow: hidden;
-      background: var(--bg);
-      padding: 100px 20px 60px;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(108,99,255,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0,212,255,0.1) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 80% 70%, rgba(108,99,255,0.08) 0%, transparent 60%);
-    }
-    /* Floating orbs */
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(60px); opacity: 0.25; z-index: 0;
-      animation: float 8s ease-in-out infinite;
-    }
-    .orb1 { width: 500px; height: 500px; background: var(--accent); top: -100px; left: -150px; animation-delay: 0s; }
-    .orb2 { width: 350px; height: 350px; background: var(--accent2); bottom: -80px; right: -80px; animation-delay: 3s; }
-    .orb3 { width: 250px; height: 250px; background: #ff6b9d; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1.5s; opacity: 0.1; }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.05); }
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 780px; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(108,99,255,0.12);
-      border: 1px solid rgba(108,99,255,0.3);
-      color: var(--accent);
-      padding: 8px 18px; border-radius: 100px;
-      font-size: 0.82rem; font-weight: 600; letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      animation: fadeUp 0.8s ease both;
-    }
-    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s ease infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
-    .hero h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3.2rem, 8vw, 6rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      background: linear-gradient(135deg, var(--text) 30%, var(--accent) 70%, var(--accent2) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 20px;
-      animation: fadeUp 0.8s 0.1s ease both;
-    }
-    .hero p {
-      font-size: 1.15rem; color: var(--text2);
-      line-height: 1.7; max-width: 560px; margin: 0 auto 40px;
-      animation: fadeUp 0.8s 0.2s ease both;
-    }
-    .hero-btns {
-      display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
-      animation: fadeUp 0.8s 0.3s ease both;
-    }
-    .btn-primary {
-      padding: 14px 32px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none; border-radius: 12px;
-      font-size: 0.95rem; font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(108,99,255,0.35);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(108,99,255,0.5); }
-    .btn-secondary {
-      padding: 13px 32px;
-      background: transparent;
-      color: var(--text); border: 1px solid var(--border);
-      border-radius: 12px; font-size: 0.95rem; font-weight: 500;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .btn-secondary:hover { border-color: var(--accent); background: rgba(108,99,255,0.08); }
-    .hero-stats {
-      display: flex; justify-content: center; gap: 48px;
-      margin-top: 64px; padding-top: 48px;
-      border-top: 1px solid var(--border);
-      animation: fadeUp 0.8s 0.4s ease both;
-    }
-    .stat { text-align: center; }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem; font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .stat-label { font-size: 0.82rem; color: var(--text3); margin-top: 4px; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
 
-    /* ===== SECTION COMMON ===== */
-    section { position: relative; z-index: 1; }
-    .section-header {
-      text-align: center; margin-bottom: 60px;
-    }
-    .section-tag {
-      display: inline-block;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800; letter-spacing: -1px;
-      color: var(--text);
-    }
-    .section-desc {
-      margin-top: 14px; font-size: 1rem;
-      color: var(--text2); max-width: 520px; margin-left: auto; margin-right: auto;
-      line-height: 1.7;
-    }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
 
-    /* ===== ABOUT ===== */
-    .about-section {
-      padding: 120px 40px;
-      background: var(--bg2);
-    }
-    .about-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-      align-items: center;
-    }
-    .about-img-wrap {
-      position: relative;
-    }
-    .about-img-wrap img {
-      width: 100%; border-radius: 20px;
-      box-shadow: var(--shadow);
-      object-fit: cover; aspect-ratio: 4/3;
-    }
-    .about-img-wrap::before {
-      content: '';
-      position: absolute; inset: -12px;
-      border: 2px solid var(--accent);
-      border-radius: 26px; opacity: 0.25;
-      z-index: -1;
-    }
-    .about-img-badge {
-      position: absolute; bottom: -20px; right: -20px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; padding: 20px 24px; border-radius: 16px;
-      font-family: 'Syne', sans-serif;
-      text-align: center;
-      box-shadow: 0 8px 32px rgba(108,99,255,0.4);
-    }
-    .about-img-badge strong { display: block; font-size: 1.8rem; font-weight: 800; }
-    .about-img-badge span { font-size: 0.78rem; opacity: 0.85; }
-    .about-text h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.4rem; font-weight: 800;
-      letter-spacing: -1px; margin-bottom: 20px;
-    }
-    .about-text p { color: var(--text2); line-height: 1.8; margin-bottom: 16px; font-size: 0.97rem; }
-    .about-features {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
-    }
-    .about-feat {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 0.88rem; color: var(--text2);
-    }
-    .about-feat-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: rgba(108,99,255,0.12);
-      color: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.9rem; flex-shrink: 0;
-    }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
 
-    /* ===== COURSES ===== */
-    .courses-section {
-      padding: 120px 40px;
-      background: var(--bg);
-    }
-    .courses-grid {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-    }
-    .course-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px; padding: 32px;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-      position: relative; overflow: hidden;
-    }
-    .course-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .course-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 16px 48px rgba(108,99,255,0.15); }
-    .course-card:hover::before { opacity: 1; }
-    .course-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin-bottom: 20px;
-      background: rgba(108,99,255,0.1);
-    }
-    .course-card h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.15rem; font-weight: 700; margin-bottom: 10px;
-    }
-    .course-card p { color: var(--text2); font-size: 0.88rem; line-height: 1.7; margin-bottom: 20px; }
-    .course-meta {
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .course-tag {
-      padding: 4px 12px; border-radius: 100px;
-      background: rgba(108,99,255,0.1); color: var(--accent);
-      font-size: 0.75rem; font-weight: 600;
-    }
-    .course-duration { font-size: 0.8rem; color: var(--text3); display: flex; align-items: center; gap: 4px; }
+        /* ===== NOISE OVERLAY ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.4;
+        }
 
-    /* ===== TEACHERS ===== */
-    .teachers-section {
-      padding: 120px 40px;
-      background: var(--bg2);
-    }
-    .teachers-grid {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
-    }
-    .teacher-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px; overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .teacher-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-    .teacher-img-wrap {
-      width: 100%; height: 220px; overflow: hidden;
-      background: linear-gradient(135deg, var(--bg3), var(--card));
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .teacher-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .teacher-avatar {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem; font-weight: 800; color: #fff;
-    }
-    .teacher-body { padding: 24px; }
-    .teacher-body h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.05rem; font-weight: 700; margin-bottom: 4px;
-    }
-    .teacher-role {
-      font-size: 0.8rem; color: var(--accent); font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;
-    }
-    .teacher-body p { color: var(--text2); font-size: 0.85rem; line-height: 1.6; }
-    .teacher-socials { display: flex; gap: 8px; margin-top: 16px; }
-    .teacher-socials a {
-      width: 32px; height: 32px; border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg3);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; color: var(--text2);
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .teacher-socials a:hover { border-color: var(--accent); color: var(--accent); }
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.4s;
+        }
 
-    /* ===== GALLERY ===== */
-    .gallery-section {
-      padding: 120px 40px;
-      background: var(--bg);
-    }
-    .gallery-grid {
-      max-width: 1100px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: auto;
-      gap: 16px;
-    }
-    .gallery-item {
-      border-radius: 16px; overflow: hidden;
-      background: var(--card);
-      aspect-ratio: 1;
-      position: relative;
-      cursor: pointer;
-    }
-    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
-    .gallery-placeholder {
-      width: 100%; height: 100%; min-height: 180px;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 12px;
-      background: linear-gradient(135deg, var(--bg3), var(--card));
-      color: var(--text3); font-size: 2rem;
-    }
-    .gallery-placeholder span { font-size: 0.75rem; color: var(--text3); }
-    .gallery-item:hover img { transform: scale(1.05); }
-    .gallery-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
-      opacity: 0; transition: opacity 0.3s;
-      display: flex; align-items: flex-end; padding: 20px;
-    }
-    .gallery-item:hover .gallery-overlay { opacity: 1; }
-    .gallery-overlay-text { color: #fff; font-weight: 600; font-size: 0.88rem; }
+        .nav-logo {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
 
-    /* ===== CONTACT ===== */
-    .contact-section {
-      padding: 120px 40px;
-      background: var(--bg2);
-    }
-    .contact-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start;
-    }
-    .contact-info h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px;
-    }
-    .contact-info p { color: var(--text2); line-height: 1.7; margin-bottom: 40px; }
-    .contact-cards { display: flex; flex-direction: column; gap: 16px; }
-    .contact-card {
-      display: flex; align-items: center; gap: 16px;
-      padding: 18px 20px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; transition: border-color 0.2s;
-    }
-    .contact-card:hover { border-color: var(--accent); }
-    .contact-card-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(108,99,255,0.1); color: var(--accent);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
-    }
-    .contact-card-text strong { display: block; font-size: 0.82rem; color: var(--text3); font-weight: 500; margin-bottom: 2px; }
-    .contact-card-text span { font-size: 0.92rem; font-weight: 600; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
 
-    /* Contact Form */
-    .contact-form-wrap {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 24px; padding: 40px;
-    }
-    .contact-form-wrap h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.4rem; font-weight: 700; margin-bottom: 28px;
-    }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text2); }
-    .form-group input,
-    .form-group select {
-      padding: 12px 16px;
-      background: var(--bg3); border: 1px solid var(--border);
-      border-radius: 10px; color: var(--text);
-      font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
-      outline: none; transition: border-color 0.2s;
-    }
-    .form-group input:focus,
-    .form-group select:focus { border-color: var(--accent); }
-    .form-group select option { background: var(--bg3); }
-    .form-group input::placeholder { color: var(--text3); }
-    .btn-submit {
-      width: 100%; padding: 14px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none; border-radius: 12px;
-      font-size: 0.95rem; font-weight: 600; margin-top: 8px;
-      transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 4px 20px rgba(108,99,255,0.3);
-    }
-    .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+        }
 
-    /* ===== MODAL (Add User) ===== */
-    .modal-overlay {
-      position: fixed; inset: 0; z-index: 2000;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px;
-      opacity: 0; pointer-events: none; transition: opacity 0.3s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal-box {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 24px; padding: 40px; width: 100%; max-width: 420px;
-      transform: translateY(20px) scale(0.97); transition: transform 0.3s;
-      position: relative;
-    }
-    .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
-    }
-    .modal-header h2 {
-      font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700;
-    }
-    .modal-close {
-      width: 36px; height: 36px; border-radius: 10px;
-      border: 1px solid var(--border); background: var(--bg3);
-      color: var(--text2); font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .modal-close:hover { border-color: red; color: red; }
-    .modal-form .form-group { margin-bottom: 14px; }
-    .modal-form .form-group input {
-      background: var(--bg2); width: 100%;
-    }
-    .btn-modal-submit {
-      width: 100%; padding: 13px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; border: none; border-radius: 12px;
-      font-size: 0.95rem; font-weight: 600; margin-top: 4px;
-      transition: opacity 0.2s; box-shadow: 0 4px 20px rgba(108,99,255,0.3);
-    }
-    .btn-modal-submit:hover { opacity: 0.88; }
+        .nav-links a:hover {
+            color: var(--text);
+            background: var(--bg3);
+        }
 
-    /* ===== TOAST ===== */
-    .toast {
-      position: fixed; bottom: 28px; right: 28px; z-index: 3000;
-      padding: 14px 20px; border-radius: 14px;
-      font-weight: 600; font-size: 0.9rem;
-      display: flex; align-items: center; gap: 10px;
-      transform: translateY(80px); opacity: 0;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
-      max-width: 320px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { background: #1a3a1a; color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
-    .toast.error { background: #3a1a1a; color: #f87171; border: 1px solid rgba(248,113,113,0.3); }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 60px 40px 32px;
-    }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto;
-    }
-    .footer-top {
-      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 48px;
-      margin-bottom: 48px;
-      padding-bottom: 48px;
-      border-bottom: 1px solid var(--border);
-    }
-    .footer-brand .nav-logo { font-size: 1.6rem; display: inline-block; margin-bottom: 14px; }
-    .footer-brand p { color: var(--text3); font-size: 0.88rem; line-height: 1.7; max-width: 240px; }
-    .footer-col h4 {
-      font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700;
-      letter-spacing: 0.5px; text-transform: uppercase; color: var(--text2);
-      margin-bottom: 16px;
-    }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col ul a { color: var(--text3); font-size: 0.88rem; transition: color 0.2s; }
-    .footer-col ul a:hover { color: var(--accent); }
-    .footer-bottom {
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    }
-    .footer-copy { color: var(--text3); font-size: 0.82rem; }
-    .footer-copy strong { color: var(--accent); }
-    .footer-socials { display: flex; gap: 8px; }
-    .footer-socials a {
-      width: 36px; height: 36px; border-radius: 10px;
-      border: 1px solid var(--border); background: var(--card);
-      color: var(--text2); font-size: 0.9rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .footer-socials a:hover { border-color: var(--accent); color: var(--accent); }
+        /* Theme toggle */
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
 
-    /* ===== SCROLL REVEAL ===== */
-    .reveal {
-      opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
 
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .courses-grid { grid-template-columns: 1fr 1fr; }
-      .teachers-grid { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-      .about-inner { gap: 48px; }
-    }
-    @media (max-width: 768px) {
-      .navbar { padding: 0 20px; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .about-inner { grid-template-columns: 1fr; gap: 40px; }
-      .about-img-badge { bottom: -12px; right: -8px; }
-      .courses-grid { grid-template-columns: 1fr; }
-      .teachers-grid { grid-template-columns: 1fr; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-item:nth-child(1) { grid-column: span 2; }
-      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
-      .form-row { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; gap: 28px; }
-      .hero-stats { gap: 24px; }
-      .about-section, .courses-section, .teachers-section,
-      .gallery-section, .contact-section { padding: 80px 20px; }
-      footer { padding: 48px 20px 24px; }
-    }
-    @media (max-width: 480px) {
-      .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-item:nth-child(1) { grid-column: span 1; }
-    }
-  </style>
+        /* Add user button */
+        .btn-add-user {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .btn-add-user:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        /* Mobile menu */
+        .hamburger {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            font-size: 1.3rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            z-index: 999;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text2);
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .mobile-menu a:hover {
+            background: var(--bg3);
+            color: var(--text);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--bg);
+            padding: 100px 20px 60px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 0%, rgba(108, 99, 255, 0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 80% 70%, rgba(108, 99, 255, 0.08) 0%, transparent 60%);
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.25;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent);
+            top: -100px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent2);
+            bottom: -80px;
+            right: -80px;
+            animation-delay: 3s;
+        }
+
+        .orb3 {
+            width: 250px;
+            height: 250px;
+            background: #ff6b9d;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 1.5s;
+            opacity: 0.1;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 780px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(108, 99, 255, 0.12);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+            color: var(--accent);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 1.5s ease infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5)
+            }
+        }
+
+        .hero h1 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: clamp(3.2rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--text) 30%, var(--accent) 70%, var(--accent2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: fadeUp 0.8s 0.1s ease both;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text2);
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0 auto 40px;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        .hero-btns {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        .btn-primary {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(108, 99, 255, 0.5);
+        }
+
+        .btn-secondary {
+            padding: 13px 32px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: rgba(108, 99, 255, 0.08);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 64px;
+            padding-top: 48px;
+            border-top: 1px solid var(--border);
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.82rem;
+            color: var(--text3);
+            margin-top: 4px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SECTION COMMON ===== */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+        }
+
+        .section-desc {
+            margin-top: 14px;
+            font-size: 1rem;
+            color: var(--text2);
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        /* ===== ABOUT ===== */
+        .about-section {
+            padding: 120px 40px;
+            background: var(--bg2);
+        }
+
+        .about-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-img-wrap {
+            position: relative;
+        }
+
+        .about-img-wrap img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            object-fit: cover;
+            aspect-ratio: 4/3;
+        }
+
+        .about-img-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -12px;
+            border: 2px solid var(--accent);
+            border-radius: 26px;
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .about-img-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            padding: 20px 24px;
+            border-radius: 16px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.4);
+        }
+
+        .about-img-badge strong {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .about-img-badge span {
+            font-size: 0.78rem;
+            opacity: 0.85;
+        }
+
+        .about-text h2 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--text2);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-size: 0.97rem;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .about-feat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            color: var(--text2);
+        }
+
+        .about-feat-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(108, 99, 255, 0.12);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== COURSES ===== */
+        .courses-section {
+            padding: 120px 40px;
+            background: var(--bg);
+        }
+
+        .courses-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .course-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 48px rgba(108, 99, 255, 0.15);
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .course-card h3 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .course-card p {
+            color: var(--text2);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .course-tag {
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .course-duration {
+            font-size: 0.8rem;
+            color: var(--text3);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== TEACHERS ===== */
+        .teachers-section {
+            padding: 120px 40px;
+            background: var(--bg2);
+        }
+
+        .teachers-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .teacher-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
+
+        .teacher-img-wrap {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--bg3), var(--card));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .teacher-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .teacher-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .teacher-body {
+            padding: 24px;
+        }
+
+        .teacher-body h3 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .teacher-role {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+        }
+
+        .teacher-body p {
+            color: var(--text2);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .teacher-socials {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .teacher-socials a {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text2);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .teacher-socials a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ===== GALLERY ===== */
+        .gallery-section {
+            padding: 120px 40px;
+            background: var(--bg);
+        }
+
+        .gallery-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 16px;
+        }
+
+        .gallery-item {
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--card);
+            aspect-ratio: 1;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--bg3), var(--card));
+            color: var(--text3);
+            font-size: 2rem;
+        }
+
+        .gallery-placeholder span {
+            font-size: 0.75rem;
+            color: var(--text3);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay-text {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-section {
+            padding: 120px 40px;
+            background: var(--bg2);
+        }
+
+        .contact-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .contact-info p {
+            color: var(--text2);
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+        }
+
+        .contact-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .contact-card-text strong {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--text3);
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .contact-card-text span {
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+
+        /* Contact Form */
+        .contact-form-wrap {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+        }
+
+        .contact-form-wrap h3 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text2);
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 12px 16px;
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group select option {
+            background: var(--bg3);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text3);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 8px;
+            transition: opacity 0.2s, transform 0.2s;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-submit:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        /* ===== MODAL (Add User) ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .modal-overlay.open .modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .modal-header h2 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg3);
+            color: var(--text2);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .modal-close:hover {
+            border-color: red;
+            color: red;
+        }
+
+        .modal-form .form-group {
+            margin-bottom: 14px;
+        }
+
+        .modal-form .form-group input {
+            background: var(--bg2);
+            width: 100%;
+        }
+
+        .btn-modal-submit {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 4px;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-modal-submit:hover {
+            opacity: 0.88;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 3000;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+            max-width: 320px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: #1a3a1a;
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .toast.error {
+            background: #3a1a1a;
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 60px 40px 32px;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .footer-brand .nav-logo {
+            font-size: 1.6rem;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        .footer-brand p {
+            color: var(--text3);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            max-width: 240px;
+        }
+
+        .footer-col h4 {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text2);
+            margin-bottom: 16px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-col ul a {
+            color: var(--text3);
+            font-size: 0.88rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .footer-copy {
+            color: var(--text3);
+            font-size: 0.82rem;
+        }
+
+        .footer-copy strong {
+            color: var(--accent);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 8px;
+        }
+
+        .footer-socials a {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text2);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+        }
+
+        .footer-socials a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ===== SCROLL REVEAL ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .courses-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .teachers-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+
+            .about-inner {
+                gap: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .about-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about-img-badge {
+                bottom: -12px;
+                right: -8px;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .teachers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 2;
+            }
+
+            .contact-inner {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .hero-stats {
+                gap: 24px;
+            }
+
+            .about-section,
+            .courses-section,
+            .teachers-section,
+            .gallery-section,
+            .contact-section {
+                padding: 80px 20px;
+            }
+
+            footer {
+                padding: 48px 20px 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 1;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-logo">IT-Park</div>
-    <ul class="nav-links">
-      <li><a href="#hero">Bosh sahifa</a></li>
-      <li><a href="#about">Haqida</a></li>
-      <li><a href="#courses">Kurslar</a></li>
-      <li><a href="#teachers">O'qituvchilar</a></li>
-      <li><a href="#gallery">Galereya</a></li>
-      <li><a href="#contact">Aloqa</a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" title="Temani o'zgartirish">🌙</button>
-      <button class="btn-add-user" id="openModal">+ Foydalanuvchi</button>
-      <button class="hamburger" id="hamburger">☰</button>
-    </div>
-  </nav>
-
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#hero" onclick="closeMobile()">Bosh sahifa</a>
-    <a href="#about" onclick="closeMobile()">Haqida</a>
-    <a href="#courses" onclick="closeMobile()">Kurslar</a>
-    <a href="#teachers" onclick="closeMobile()">O'qituvchilar</a>
-    <a href="#gallery" onclick="closeMobile()">Galereya</a>
-    <a href="#contact" onclick="closeMobile()">Aloqa</a>
-  </div>
-
-  <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
-    <div class="hero-bg"></div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="hero-content">
-      <div class="hero-badge">🚀 Kelajak texnologiyalari</div>
-      <h1>IT-Park<br/>Akademiyasi</h1>
-      <p>Zamonaviy texnologiyalarni o'rganing, kelajagingizni o'zingiz quring. Professional dasturchilar qo'li ostida amaliy ta'lim.</p>
-      <div class="hero-btns">
-        <a href="#contact" class="btn-primary">Kursga yozilish</a>
-        <a href="#about" class="btn-secondary">Batafsil ma'lumot</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Bitiruvchilar</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">12+</div>
-          <div class="stat-label">Kurslar</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">95%</div>
-          <div class="stat-label">Ish bilan ta'minlash</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">6+</div>
-          <div class="stat-label">Yillik tajriba</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== ABOUT ===== -->
-  <section class="about-section" id="about">
-    <div class="about-inner">
-      <div class="about-img-wrap reveal">
-        <div style="width:100%;aspect-ratio:4/3;border-radius:20px;background:linear-gradient(135deg,var(--bg3),var(--card));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--text3);">
-          <div style="font-size:3rem;">🏢</div>
-          <span style="font-size:0.85rem;">IT-Park binosi</span>
-        </div>
-        <div class="about-img-badge">
-          <strong>2018</strong>
-          <span>Tashkil etilgan</span>
-        </div>
-      </div>
-      <div class="about-text reveal">
-        <div class="section-tag">Biz haqimizda</div>
-        <h2>IT sohasida yetakchi ta'lim markazi</h2>
-        <p>IT-Park — O'zbekistonning eng zamonaviy texnologik ta'lim markazlaridan biri. Biz yosh iste'dodlarni dunyo standartlarida tayyorlaymiz va ularni global IT bozoriga chiqaramiz.</p>
-        <p>Tajribali o'qituvchilar jamoasi, zamonaviy o'quv muhiti va amaliy loyihalar orqali siz haqiqiy professional bo'lasiz.</p>
-        <div class="about-features">
-          <div class="about-feat">
-            <div class="about-feat-icon">✅</div>
-            <span>Sertifikatli kurslar</span>
-          </div>
-          <div class="about-feat">
-            <div class="about-feat-icon">💼</div>
-            <span>Ish joylashtiriladi</span>
-          </div>
-          <div class="about-feat">
-            <div class="about-feat-icon">🌐</div>
-            <span>Online va offline</span>
-          </div>
-          <div class="about-feat">
-            <div class="about-feat-icon">🎯</div>
-            <span>Amaliy loyihalar</span>
-          </div>
-          <div class="about-feat">
-            <div class="about-feat-icon">👥</div>
-            <span>Kichik guruhlar</span>
-          </div>
-          <div class="about-feat">
-            <div class="about-feat-icon">🏆</div>
-            <span>Hackathonlar</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== COURSES ===== -->
-  <section class="courses-section" id="courses">
-    <div style="max-width:1100px;margin:0 auto;">
-      <div class="section-header reveal">
-        <div class="section-tag">Yo'nalishlar</div>
-        <div class="section-title">Kurslarimiz</div>
-        <p class="section-desc">Sanoat talablariga mos, amaliy va zamonaviy o'quv dasturlari</p>
-      </div>
-      <div class="courses-grid">
-        <div class="course-card reveal">
-          <div class="course-icon">🌐</div>
-          <h3>Frontend Development</h3>
-          <p>HTML, CSS, JavaScript, React. Zamonaviy veb-interfeys yaratish san'atini o'rganing.</p>
-          <div class="course-meta">
-            <span class="course-tag">Beginner → Pro</span>
-            <span class="course-duration">⏱ 6 oy</span>
-          </div>
-        </div>
-        <div class="course-card reveal">
-          <div class="course-icon">⚙️</div>
-          <h3>Backend Development</h3>
-          <p>Node.js, Python, Django, REST API. Server tomoni dasturlashni chuqur o'rganing.</p>
-          <div class="course-meta">
-            <span class="course-tag">Intermediate</span>
-            <span class="course-duration">⏱ 8 oy</span>
-          </div>
-        </div>
-        <div class="course-card reveal">
-          <div class="course-icon">📱</div>
-          <h3>Mobile Development</h3>
-          <p>React Native va Flutter bilan iOS va Android ilovalar yaratishni o'rganing.</p>
-          <div class="course-meta">
-            <span class="course-tag">Intermediate</span>
-            <span class="course-duration">⏱ 7 oy</span>
-          </div>
-        </div>
-        <div class="course-card reveal">
-          <div class="course-icon">🎨</div>
-          <h3>UI/UX Design</h3>
-          <p>Figma, dizayn prinsiplari, foydalanuvchi tajribasi. Chiroyli va qulay interfeys yarating.</p>
-          <div class="course-meta">
-            <span class="course-tag">Beginner</span>
-            <span class="course-duration">⏱ 4 oy</span>
-          </div>
-        </div>
-        <div class="course-card reveal">
-          <div class="course-icon">🤖</div>
-          <h3>Data Science & AI</h3>
-          <p>Python, Machine Learning, Neural Networks. Sun'iy intellekt sohasiga kirish.</p>
-          <div class="course-meta">
-            <span class="course-tag">Advanced</span>
-            <span class="course-duration">⏱ 10 oy</span>
-          </div>
-        </div>
-        <div class="course-card reveal">
-          <div class="course-icon">🔒</div>
-          <h3>Cybersecurity</h3>
-          <p>Kiber xavfsizlik asoslari, penetration testing, tarmoq himoyasi kursi.</p>
-          <div class="course-meta">
-            <span class="course-tag">Advanced</span>
-            <span class="course-duration">⏱ 9 oy</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== TEACHERS ===== -->
-  <section class="teachers-section" id="teachers">
-    <div style="max-width:1100px;margin:0 auto;">
-      <div class="section-header reveal">
-        <div class="section-tag">Jamoa</div>
-        <div class="section-title">O'qituvchilarimiz</div>
-        <p class="section-desc">Soha mutaxassislari va real loyihalarda tajriba to'plagan mentorlar</p>
-      </div>
-      <div class="teachers-grid">
-        <div class="teacher-card reveal">
-          <div class="teacher-img-wrap">
-            <div class="teacher-avatar">J</div>
-          </div>
-          <div class="teacher-body">
-            <h3>Javohir Qodirov</h3>
-            <div class="teacher-role">Frontend Developer</div>
-            <p>5 yillik tajribaga ega. React, Vue, Next.js mutaxassisi. 200+ o'quvchi tayyorlagan.</p>
-            <div class="teacher-socials">
-              <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
-            </div>
-          </div>
-        </div>
-        <div class="teacher-card reveal">
-          <div class="teacher-img-wrap">
-            <div class="teacher-avatar">S</div>
-          </div>
-          <div class="teacher-body">
-            <h3>Sarvar Toshmatov</h3>
-            <div class="teacher-role">Backend Developer</div>
-            <p>Node.js va Python eksperti. Google'da 3 yil ishlagan. API arxitekturasi bo'yicha mentor.</p>
-            <div class="teacher-socials">
-              <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
-            </div>
-          </div>
-        </div>
-        <div class="teacher-card reveal">
-          <div class="teacher-img-wrap">
-            <div class="teacher-avatar">N</div>
-          </div>
-          <div class="teacher-body">
-            <h3>Nilufar Yusupova</h3>
-            <div class="teacher-role">UI/UX Designer</div>
-            <p>Figma va Adobe XD mutaxassisi. Yetakchi kompaniyalar uchun 50+ ta loyiha dizayni.</p>
-            <div class="teacher-socials">
-              <a href="#">be</a><a href="#">dr</a><a href="#">tg</a>
-            </div>
-          </div>
-        </div>
-        <div class="teacher-card reveal">
-          <div class="teacher-img-wrap">
-            <div class="teacher-avatar">A</div>
-          </div>
-          <div class="teacher-body">
-            <h3>Alisher Nazarov</h3>
-            <div class="teacher-role">Mobile Developer</div>
-            <p>Flutter va React Native bilan 4 yillik ish tajribasi. App Store'da 10+ ilova nashr qilgan.</p>
-            <div class="teacher-socials">
-              <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
-            </div>
-          </div>
-        </div>
-        <div class="teacher-card reveal">
-          <div class="teacher-img-wrap">
-            <div class="teacher-avatar">D</div>
-          </div>
-          <div class="teacher-body">
-            <h3>Doniyor Ergashev</h3>
-            <div class="teacher-role">Data Scientist</div>
-            <p>Machine Learning va Deep Learning bo'yicha mutaxassis. PyTorch, TensorFlow eksperti.</p>
-            <div class="teacher-socials">
-              <a href="#">kgl</a><a href="#">gh</a><a href="#">tg</a>
-            </div>
-          </div>
-        </div>
-        <div class="teacher-card reveal">
-          <div class="teacher-img-wrap">
-            <div class="teacher-avatar">Z</div>
-          </div>
-          <div class="teacher-body">
-            <h3>Zulfiya Karimova</h3>
-            <div class="teacher-role">Cybersecurity Expert</div>
-            <p>CEH va OSCP sertifikatlariga ega. Penetration testing va network security bo'yicha mentor.</p>
-            <div class="teacher-socials">
-              <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== GALLERY ===== -->
-  <section class="gallery-section" id="gallery">
-    <div style="max-width:1100px;margin:0 auto;">
-      <div class="section-header reveal">
-        <div class="section-tag">Galereya</div>
-        <div class="section-title">Bizning muhit</div>
-        <p class="section-desc">Zamonaviy o'quv muhiti, hackathonlar va bitiruvlar</p>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder">🏢<span>Asosiy Auditoriya</span></div>
-          <div class="gallery-overlay"><div class="gallery-overlay-text">Asosiy Auditoriya</div></div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder">💻<span>Lab xona</span></div>
-          <div class="gallery-overlay"><div class="gallery-overlay-text">Laboratoriya</div></div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder">🏆<span>Hackathon</span></div>
-          <div class="gallery-overlay"><div class="gallery-overlay-text">Hackathon 2024</div></div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder">🎓<span>Bitirish marosimi</span></div>
-          <div class="gallery-overlay"><div class="gallery-overlay-text">Bitirish 2024</div></div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder">🤝<span>Networking</span></div>
-          <div class="gallery-overlay"><div class="gallery-overlay-text">Networking Event</div></div>
-        </div>
-        <div class="gallery-item reveal">
-          <div class="gallery-placeholder">🚀<span>Demo Day</span></div>
-          <div class="gallery-overlay"><div class="gallery-overlay-text">Demo Day</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONTACT ===== -->
-  <section class="contact-section" id="contact">
-    <div class="contact-inner">
-      <div class="contact-info reveal">
-        <div class="section-tag">Aloqa</div>
-        <h2>Kursga yoziling!</h2>
-        <p>Sizni IT sohasida muvaffaqiyatga olib chiqishga tayyormiz. Hoziroq ariza qoldiring va biz siz bilan bog'lanamiz.</p>
-        <div class="contact-cards">
-          <div class="contact-card">
-            <div class="contact-card-icon">📍</div>
-            <div class="contact-card-text">
-              <strong>Manzil</strong>
-              <span>Toshkent, Chilonzor tumani</span>
-            </div>
-          </div>
-          <div class="contact-card">
-            <div class="contact-card-icon">📞</div>
-            <div class="contact-card-text">
-              <strong>Telefon</strong>
-              <span>+998 71 123 45 67</span>
-            </div>
-          </div>
-          <div class="contact-card">
-            <div class="contact-card-icon">✉️</div>
-            <div class="contact-card-text">
-              <strong>Email</strong>
-              <span>info@it-park.uz</span>
-            </div>
-          </div>
-          <div class="contact-card">
-            <div class="contact-card-icon">⏰</div>
-            <div class="contact-card-text">
-              <strong>Ish vaqti</strong>
-              <span>Dush–Shan: 9:00 – 20:00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="contact-form-wrap reveal">
-        <h3>Ariza shakli</h3>
-        <form id="contactForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Ismingiz</label>
-              <input type="text" name="firstName" placeholder="Ism..." required />
-            </div>
-            <div class="form-group">
-              <label>Familiyangiz</label>
-              <input type="text" name="lastName" placeholder="Familiya..." required />
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Yoshingiz</label>
-            <input type="number" name="age" placeholder="Yosh..." min="12" max="60" required />
-          </div>
-          <div class="form-group">
-            <label>Yo'nalish tanlang</label>
-            <select name="direction" required>
-              <option value="">— Tanlang —</option>
-              <option value="frontend">Frontend Development</option>
-              <option value="backend">Backend Development</option>
-              <option value="mobile">Mobile Development</option>
-              <option value="design">UI/UX Design</option>
-              <option value="data">Data Science & AI</option>
-              <option value="cyber">Cybersecurity</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Telefon raqamingiz</label>
-            <input type="tel" name="phone" placeholder="+998 __ ___ __ __" required />
-          </div>
-          <button type="submit" class="btn-submit">Ariza yuborish →</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <div class="nav-logo">IT-Park</div>
-          <p>O'zbekistonning yetakchi IT ta'lim markazi. Kelajak mutaxassislarini yetishtirish — bizning missiyamiz.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Havolalar</h4>
-          <ul>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">IT-Park</div>
+        <ul class="nav-links">
             <li><a href="#hero">Bosh sahifa</a></li>
             <li><a href="#about">Haqida</a></li>
             <li><a href="#courses">Kurslar</a></li>
             <li><a href="#teachers">O'qituvchilar</a></li>
-          </ul>
+            <li><a href="#gallery">Galereya</a></li>
+            <li><a href="#contact">Aloqa</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle" title="Temani o'zgartirish">🌙</button>
+            <button class="btn-add-user" id="openModal">+ Foydalanuvchi</button>
+            <button class="hamburger" id="hamburger">☰</button>
         </div>
-        <div class="footer-col">
-          <h4>Kurslar</h4>
-          <ul>
-            <li><a href="#courses">Frontend</a></li>
-            <li><a href="#courses">Backend</a></li>
-            <li><a href="#courses">Mobile</a></li>
-            <li><a href="#courses">UI/UX Design</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Aloqa</h4>
-          <ul>
-            <li><a href="#">Telegram</a></li>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">YouTube</a></li>
-            <li><a href="#contact">Ariza</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p class="footer-copy">© 2024 IT-Park. Barcha huquqlar himoyalangan. <strong>Javohir Javlonboyev</strong> tomonidan yaratildi.</p>
-        <div class="footer-socials">
-          <a href="#" title="Telegram">✈</a>
-          <a href="#" title="Instagram">📸</a>
-          <a href="#" title="YouTube">▶</a>
-          <a href="#" title="GitHub">⌨</a>
-        </div>
-      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#hero" onclick="closeMobile()">Bosh sahifa</a>
+        <a href="#about" onclick="closeMobile()">Haqida</a>
+        <a href="#courses" onclick="closeMobile()">Kurslar</a>
+        <a href="#teachers" onclick="closeMobile()">O'qituvchilar</a>
+        <a href="#gallery" onclick="closeMobile()">Galereya</a>
+        <a href="#contact" onclick="closeMobile()">Aloqa</a>
     </div>
-  </footer>
 
-  <!-- ===== ADD USER MODAL ===== -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h2>Foydalanuvchi qo'shish</h2>
-        <button class="modal-close" id="closeModal">✕</button>
-      </div>
-      <form class="modal-form" id="userForm">
-        <div class="form-group">
-          <label>Foydalanuvchi nomi</label>
-          <input type="text" name="user" placeholder="Username..." required />
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+        <div class="hero-content">
+            <div class="hero-badge"> Kelajak texnologiyalari</div>
+            <h1>IT-Park<br /></h1>
+            <p>Zamonaviy texnologiyalarni o'rganing, kelajagingizni o'zingiz quring. Professional dasturchilar qo'li
+                ostida amaliy ta'lim.</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn-primary">Kursga yozilish</a>
+                <a href="#about" class="btn-secondary">Batafsil ma'lumot</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-num">500+</div>
+                    <div class="stat-label">Bitiruvchilar</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">12+</div>
+                    <div class="stat-label">Kurslar</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">95%</div>
+                    <div class="stat-label">Ish bilan ta'minlash</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-num">6+</div>
+                    <div class="stat-label">Yillik tajriba</div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" placeholder="Email..." required />
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about-section" id="about">
+        <div class="about-inner">
+            <div class="about-img-wrap reveal">
+                <div
+                    style="width:100%;aspect-ratio:4/3;border-radius:20px;background:linear-gradient(135deg,var(--bg3),var(--card));display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--text3);">
+                    <div style="font-size:3rem;"></div>
+                    <img src="orig.jpeg" alt="">
+                </div>
+                <div class="about-img-badge">
+                    <strong>2018</strong>
+                    <span>Tashkil etilgan</span>
+                </div>
+            </div>
+            <div class="about-text reveal">
+                <div class="section-tag">Biz haqimizda</div>
+                <h2>IT sohasida yetakchi ta'lim markazi</h2>
+                <p>IT-Park — O'zbekistonning eng zamonaviy texnologik ta'lim markazlaridan biri. Biz yosh iste'dodlarni
+                    dunyo standartlarida tayyorlaymiz va ularni global IT bozoriga chiqaramiz.</p>
+                <p>Tajribali o'qituvchilar jamoasi, zamonaviy o'quv muhiti va amaliy loyihalar orqali siz haqiqiy
+                    professional bo'lasiz.</p>
+                <div class="about-features">
+                    <div class="about-feat">
+                        <div class="about-feat-icon"></div>
+                        <span>Sertifikatli kurslar</span>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon"></div>
+                        <span>Ish joylashtiriladi</span>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon"></div>
+                        <span>Online va offline</span>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon"></div>
+                        <span>Amaliy loyihalar</span>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon"></div>
+                        <span>Kichik guruhlar</span>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon"></div>
+                        <span>Hackathonlar</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label>Parol</label>
-          <input type="password" name="password" placeholder="Parol..." required />
+    </section>
+
+    <!-- ===== COURSES ===== -->
+    <section class="courses-section" id="courses">
+        <div style="max-width:1100px;margin:0 auto;">
+            <div class="section-header reveal">
+                <div class="section-tag">Yo'nalishlar</div>
+                <div class="section-title">Kurslarimiz</div>
+                <p class="section-desc">Sanoat talablariga mos, amaliy va zamonaviy o'quv dasturlari</p>
+            </div>
+            <div class="courses-grid">
+                <div class="course-card reveal">
+                    <div class="course-icon">🌐</div>
+                    <h3>Frontend Development</h3>
+                    <p>HTML, CSS, JavaScript, React. Zamonaviy veb-interfeys yaratish san'atini o'rganing.</p>
+                    <div class="course-meta">
+                        <span class="course-tag">Beginner → Pro</span>
+                        <span class="course-duration">⏱ 6 oy</span>
+                    </div>
+                </div>
+                <div class="course-card reveal">
+                    <div class="course-icon">⚙️</div>
+                    <h3>Backend Development</h3>
+                    <p>Node.js, Python, Django, REST API. Server tomoni dasturlashni chuqur o'rganing.</p>
+                    <div class="course-meta">
+                        <span class="course-tag">Intermediate</span>
+                        <span class="course-duration">⏱ 8 oy</span>
+                    </div>
+                </div>
+                <div class="course-card reveal">
+                    <div class="course-icon">📱</div>
+                    <h3>Mobile Development</h3>
+                    <p>React Native va Flutter bilan iOS va Android ilovalar yaratishni o'rganing.</p>
+                    <div class="course-meta">
+                        <span class="course-tag">Intermediate</span>
+                        <span class="course-duration">⏱ 7 oy</span>
+                    </div>
+                </div>
+                <div class="course-card reveal">
+                    <div class="course-icon">🎨</div>
+                    <h3>UI/UX Design</h3>
+                    <p>Figma, dizayn prinsiplari, foydalanuvchi tajribasi. Chiroyli va qulay interfeys yarating.</p>
+                    <div class="course-meta">
+                        <span class="course-tag">Beginner</span>
+                        <span class="course-duration">⏱ 4 oy</span>
+                    </div>
+                </div>
+                <div class="course-card reveal">
+                    <div class="course-icon">🤖</div>
+                    <h3>Data Science & AI</h3>
+                    <p>Python, Machine Learning, Neural Networks. Sun'iy intellekt sohasiga kirish.</p>
+                    <div class="course-meta">
+                        <span class="course-tag">Advanced</span>
+                        <span class="course-duration">⏱ 10 oy</span>
+                    </div>
+                </div>
+                <div class="course-card reveal">
+                    <div class="course-icon">🔒</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Kiber xavfsizlik asoslari, penetration testing, tarmoq himoyasi kursi.</p>
+                    <div class="course-meta">
+                        <span class="course-tag">Advanced</span>
+                        <span class="course-duration">⏱ 9 oy</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label>Parolni tasdiqlang</label>
-          <input type="password" name="confirm_password" placeholder="Parolni takrorlang..." required />
+    </section>
+
+    <!-- ===== TEACHERS ===== -->
+    <section class="teachers-section" id="teachers">
+        <div style="max-width:1100px;margin:0 auto;">
+            <div class="section-header reveal">
+                <div class="section-tag">Jamoa</div>
+                <div class="section-title">O'qituvchilarimiz</div>
+                <p class="section-desc">Soha mutaxassislari va real loyihalarda tajriba to'plagan mentorlar</p>
+            </div>
+            <div class="teachers-grid">
+                <div class="teacher-card reveal">
+                    <div class="teacher-img-wrap">
+                        <img src="" alt="">
+                    </div>
+                    <div class="teacher-body">
+                        <h3>Javohir Qodirov</h3>
+                        <div class="teacher-role">Frontend Developer</div>
+                        <p>5 yillik tajribaga ega. React, Vue, Next.js mutaxassisi. 200+ o'quvchi tayyorlagan.</p>
+                        <div class="teacher-socials">
+                            <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="teacher-card reveal">
+                    <div class="teacher-img-wrap">
+                        <img src="" alt="">
+                    </div>
+                    <div class="teacher-body">
+                        <h3>Sarvar Toshmatov</h3>
+                        <div class="teacher-role">Backend Developer</div>
+                        <p>Node.js va Python eksperti. Google'da 3 yil ishlagan. API arxitekturasi bo'yicha mentor.</p>
+                        <div class="teacher-socials">
+                            <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="teacher-card reveal">
+                    <div class="teacher-img-wrap">
+                        <img src="" alt="">
+                    </div>
+                    <div class="teacher-body">
+                        <h3>Nilufar Yusupova</h3>
+                        <div class="teacher-role">UI/UX Designer</div>
+                        <p>Figma va Adobe XD mutaxassisi. Yetakchi kompaniyalar uchun 50+ ta loyiha dizayni.</p>
+                        <div class="teacher-socials">
+                            <a href="#">be</a><a href="#">dr</a><a href="#">tg</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="teacher-card reveal">
+                    <div class="teacher-img-wrap">
+                        <img src="" alt="">
+                    </div>
+                    <div class="teacher-body">
+                        <h3>Alisher Nazarov</h3>
+                        <div class="teacher-role">Mobile Developer</div>
+                        <p>Flutter va React Native bilan 4 yillik ish tajribasi. App Store'da 10+ ilova nashr qilgan.
+                        </p>
+                        <div class="teacher-socials">
+                            <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="teacher-card reveal">
+                    <div class="teacher-img-wrap">
+                        <img src="" alt="">
+                    </div>
+                    <div class="teacher-body">
+                        <h3>Doniyor Ergashev</h3>
+                        <div class="teacher-role">Data Scientist</div>
+                        <p>Machine Learning va Deep Learning bo'yicha mutaxassis. PyTorch, TensorFlow eksperti.</p>
+                        <div class="teacher-socials">
+                            <a href="#">kgl</a><a href="#">gh</a><a href="#">tg</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="teacher-card reveal">
+                    <div class="teacher-img-wrap">
+                        <img src="" alt="">
+                    </div>
+                    <div class="teacher-body">
+                        <h3>Zulfiya Karimova</h3>
+                        <div class="teacher-role">Cybersecurity Expert</div>
+                        <p>CEH va OSCP sertifikatlariga ega. Penetration testing va network security bo'yicha mentor.
+                        </p>
+                        <div class="teacher-socials">
+                            <a href="#">in</a><a href="#">gh</a><a href="#">tg</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn-modal-submit">Qo'shish</button>
-      </form>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="gallery-section" id="gallery">
+        <div style="max-width:1100px;margin:0 auto;">
+            <div class="section-header reveal">
+                <div class="section-tag">Galereya</div>
+                <div class="section-title">Bizning muhit</div>
+                <p class="section-desc">Zamonaviy o'quv muhiti, hackathonlar va bitiruvlar</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder"><span>Asosiy Auditoriya</span></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">Asosiy Auditoriya</div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder"><span>Lab xona</span></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">Laboratoriya</div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder"><span>Hackathon</span></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">Hackathon 2024</div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder"><span>Bitirish marosimi</span></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">Bitirish 2024</div>
+                    </div>
+                </div>
+                <div class="gallery-item reveal">
+                    <div class="gallery-placeholder"><span>Networking</span></div>
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">Networking Event</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact-section" id="contact">
+        <div class="contact-inner">
+            <div class="contact-info reveal">
+                <div class="section-tag">Aloqa</div>
+                <h2>Kursga yoziling!</h2>
+                <p>Sizni IT sohasida muvaffaqiyatga olib chiqishga tayyormiz. Hoziroq ariza qoldiring va biz siz bilan
+                    bog'lanamiz.</p>
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="contact-card-icon"></div>
+                        <div class="contact-card-text">
+                            <strong>Manzil</strong>
+                            <span>Toshkent, Chilonzor tumani</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon"></div>
+                        <div class="contact-card-text">
+                            <strong>Telefon</strong>
+                            <span>+998 71 123 45 67</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon"></div>
+                        <div class="contact-card-text">
+                            <strong>Email</strong>
+                            <span>info@it-park.uz</span>
+                        </div>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-card-icon"></div>
+                        <div class="contact-card-text">
+                            <strong>Ish vaqti</strong>
+                            <span>Dush–Shan: 9:00 – 20:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form-wrap reveal">
+                <h3>Ariza shakli</h3>
+                <form id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ismingiz</label>
+                            <input type="text" name="firstName" placeholder="Ism..." required />
+                        </div>
+                        <div class="form-group">
+                            <label>Familiyangiz</label>
+                            <input type="text" name="lastName" placeholder="Familiya..." required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Yoshingiz</label>
+                        <input type="number" name="age" placeholder="Yosh..." min="12" max="60" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Yo'nalish tanlang</label>
+                        <select name="direction" required>
+                            <option value="">— Tanlang —</option>
+                            <option value="frontend">Frontend Development</option>
+                            <option value="backend">Backend Development</option>
+                            <option value="mobile">Mobile Development</option>
+                            <option value="design">UI/UX Design</option>
+                            <option value="data">Data Science & AI</option>
+                            <option value="cyber">Cybersecurity</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon raqamingiz</label>
+                        <input type="tel" name="phone" placeholder="+998 __ ___ __ __" required />
+                    </div>
+                    <button type="submit" class="btn-submit">Ariza yuborish →</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="nav-logo">IT-Park</div>
+                    <p>O'zbekistonning yetakchi IT ta'lim markazi. Kelajak mutaxassislarini yetishtirish — bizning
+                        missiyamiz.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Havolalar</h4>
+                    <ul>
+                        <li><a href="#hero">Bosh sahifa</a></li>
+                        <li><a href="#about">Haqida</a></li>
+                        <li><a href="#courses">Kurslar</a></li>
+                        <li><a href="#teachers">O'qituvchilar</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kurslar</h4>
+                    <ul>
+                        <li><a href="#courses">Frontend</a></li>
+                        <li><a href="#courses">Backend</a></li>
+                        <li><a href="#courses">Mobile</a></li>
+                        <li><a href="#courses">UI/UX Design</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Aloqa</h4>
+                    <ul>
+                        <li><a href="#">Telegram</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#contact">Ariza</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2024 IT-Park. Barcha huquqlar himoyalangan. <strong>Javohir
+                        Javlonboyev</strong> tomonidan yaratildi.</p>
+                <div class="footer-socials">
+                    <a href="#" title="Telegram">✈</a>
+                    <a href="#" title="Instagram">📸</a>
+                    <a href="#" title="YouTube">▶</a>
+                    <a href="#" title="GitHub">⌨</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== ADD USER MODAL ===== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Foydalanuvchi qo'shish</h2>
+                <button class="modal-close" id="closeModal">✕</button>
+            </div>
+            <form class="modal-form" id="userForm">
+                <div class="form-group">
+                    <label>Foydalanuvchi nomi</label>
+                    <input type="text" name="user" placeholder="Username..." required />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Email..." required />
+                </div>
+                <div class="form-group">
+                    <label>Parol</label>
+                    <input type="password" name="password" placeholder="Parol..." required />
+                </div>
+                <div class="form-group">
+                    <label>Parolni tasdiqlang</label>
+                    <input type="password" name="confirm_password" placeholder="Parolni takrorlang..." required />
+                </div>
+                <button type="submit" class="btn-modal-submit">Qo'shish</button>
+            </form>
+        </div>
     </div>
-  </div>
 
-  <!-- ===== TOAST ===== -->
-  <div class="toast" id="toast"></div>
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
 
-  <script>
-    // ===== THEME =====
-    const html = document.documentElement;
-    const themeBtn = document.getElementById('themeToggle');
-    let theme = localStorage.getItem('theme') || 'dark';
-    applyTheme(theme);
+    <script>
+        // ===== THEME =====
+        const html = document.documentElement;
+        const themeBtn = document.getElementById('themeToggle');
+        let theme = localStorage.getItem('theme') || 'dark';
+        applyTheme(theme);
 
-    function applyTheme(t) {
-      html.setAttribute('data-theme', t);
-      themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
-      localStorage.setItem('theme', t);
-      theme = t;
-    }
-    themeBtn.addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' : 'dark'));
-
-    // ===== MOBILE MENU =====
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-    function closeMobile() { mobileMenu.classList.remove('open'); }
-
-    // ===== MODAL =====
-    const overlay = document.getElementById('modalOverlay');
-    document.getElementById('openModal').addEventListener('click', () => overlay.classList.add('open'));
-    document.getElementById('closeModal').addEventListener('click', () => overlay.classList.remove('open'));
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
-
-    // ===== TOAST =====
-    function showToast(msg, type = 'success') {
-      const t = document.getElementById('toast');
-      t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
-      t.className = 'toast ' + type;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3500);
-    }
-
-    // ===== USER FORM =====
-    const userForm = document.getElementById('userForm');
-    userForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const user = userForm.user.value.trim();
-      const email = userForm.email.value.trim();
-      const password = userForm.password.value;
-      const confirm = userForm.confirm_password.value;
-      if (password !== confirm) {
-        showToast("Parollar mos kelmadi!", 'error');
-        return;
-      }
-      const users = JSON.parse(localStorage.getItem('IT_Users') || '[]');
-      users.push({ user, email, password });
-      localStorage.setItem('IT_Users', JSON.stringify(users));
-      showToast("Foydalanuvchi muvaffaqiyatli qo'shildi!", 'success');
-      userForm.reset();
-      overlay.classList.remove('open');
-    });
-
-    // ===== CONTACT FORM =====
-    document.getElementById('contactForm').addEventListener('submit', e => {
-      e.preventDefault();
-      showToast("Arizangiz muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.", 'success');
-      e.target.reset();
-    });
-
-    // ===== SCROLL REVEAL =====
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+        function applyTheme(t) {
+            html.setAttribute('data-theme', t);
+            themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem('theme', t);
+            theme = t;
         }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        themeBtn.addEventListener('click', () => applyTheme(theme === 'dark' ? 'light' : 'dark'));
 
-    // ===== NAVBAR SCROLL =====
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('navbar');
-      nav.style.boxShadow = window.scrollY > 40 ? '0 2px 32px rgba(0,0,0,0.3)' : 'none';
-    });
-  </script>
+        // ===== MOBILE MENU =====
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+        function closeMobile() { mobileMenu.classList.remove('open'); }
+
+        // ===== MODAL =====
+        const overlay = document.getElementById('modalOverlay');
+        document.getElementById('openModal').addEventListener('click', () => overlay.classList.add('open'));
+        document.getElementById('closeModal').addEventListener('click', () => overlay.classList.remove('open'));
+        overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
+
+        // ===== TOAST =====
+        function showToast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+            t.className = 'toast ' + type;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3500);
+        }
+
+        // ===== USER FORM =====
+        const userForm = document.getElementById('userForm');
+        userForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const user = userForm.user.value.trim();
+            const email = userForm.email.value.trim();
+            const password = userForm.password.value;
+            const confirm = userForm.confirm_password.value;
+            if (password !== confirm) {
+                showToast("Parollar mos kelmadi!", 'error');
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem('IT_Users') || '[]');
+            users.push({ user, email, password });
+            localStorage.setItem('IT_Users', JSON.stringify(users));
+            showToast("Foydalanuvchi muvaffaqiyatli qo'shildi!", 'success');
+            userForm.reset();
+            overlay.classList.remove('open');
+        });
+
+        // ===== CONTACT FORM =====
+        document.getElementById('contactForm').addEventListener('submit', e => {
+            e.preventDefault();
+            showToast("Arizangiz muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.", 'success');
+            e.target.reset();
+        });
+
+        // ===== SCROLL REVEAL =====
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ===== NAVBAR SCROLL =====
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            nav.style.boxShadow = window.scrollY > 40 ? '0 2px 32px rgba(0,0,0,0.3)' : 'none';
+        });
+    </script>
 </body>
+
 </html>
